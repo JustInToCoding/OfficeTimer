@@ -3,6 +3,7 @@ package nl.mranderson.sittingapp;
 import android.app.Activity;
 import android.view.View;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 import co.mobiwise.materialintro.MaterialIntroConfiguration;
@@ -104,30 +105,22 @@ public abstract class MaterialIntroUtils implements MaterialIntroListener {
         }
     }
 
-//    public void generate(final ArrayList<MaterialIntroView.Builder> tutorialList) {
-//
-//        for (int position = 0; position < tutorialList.size(); position++) {
-//
-//            if (tutorialList.get(position + 1) != null) {
-//                MaterialIntroView.Builder builder = tutorialList.get(position);
-//                builder.setListener(new MaterialIntroListener() {
-//                    @Override
-//                    public void onUserClicked(String s) {
-//                        MaterialIntroView.Builder builder2 = tutorialList.get(position + 1);
-//                        builder2.setListener(new MaterialIntroListener() {
-//                            @Override
-//                            public void onUserClicked(String s) {
-//                                MaterialIntroView.Builder builder3 = tutorialList.get(position + 2);
-//                                builder3.show();
-//                            }
-//                        });
-//                        builder2.show();
-//                    }
-//                });
-//                builder.show();
-//            }
-//        }
-//    }
+    public void generate(final ArrayList<MaterialIntroView.Builder> tutorialList) {
+        MaterialIntroView.Builder builder = tutorialList.get(0);
+        MaterialIntroView.Builder builder1 = builder;
+        MaterialIntroView.Builder builder2;
+        for (int position = 1; position < tutorialList.size(); position++) {
+            builder2 = tutorialList.get(position);
+            builder1.setListener(new MaterialIntroListener() {
+                @Override
+                public void onUserClicked(String s) {
+                    builder2.show();
+                }
+            });
+            builder1 = builder2;
+        }
+        builder.show();
+    }
 
 
 ////        for (int position = 0; position == tutorialList.size(); position++) {
@@ -141,5 +134,10 @@ public abstract class MaterialIntroUtils implements MaterialIntroListener {
 //
 ////        }
 ////            tutorialList.get(i).setListener()
+}
 
+    @Override
+    public void onUserClicked(String s) {
+
+    }
 }
